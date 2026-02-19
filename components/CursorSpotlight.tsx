@@ -21,8 +21,7 @@ export default function CursorSpotlight() {
   const [trail, setTrail] = useState<TrailPoint[]>([]);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  
- const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 const animationFrameRef = useRef<number | null>(null);
 
 
