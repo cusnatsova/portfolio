@@ -22,8 +22,8 @@ export default function CursorSpotlight() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   
-  const idleTimeoutRef = useRef<NodeJS.Timeout>();
-  const animationFrameRef = useRef<number>();
+  const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
   const lastMousePositionRef = useRef<MousePosition>({ x: 0, y: 0 });
   const mouseVelocityRef = useRef({ x: 0, y: 0 });
   const trailIdRef = useRef(0);
@@ -99,7 +99,7 @@ export default function CursorSpotlight() {
       }
       
       // Reset idle timeout
-      if (idleTimeoutRef.current) {
+      if (idleTimeoutRef.current !== null) {
         clearTimeout(idleTimeoutRef.current);
       }
       
@@ -156,11 +156,11 @@ export default function CursorSpotlight() {
       document.removeEventListener('mouseover', handleMouseEnter);
       document.removeEventListener('mouseout', handleMouseLeave);
       
-      if (idleTimeoutRef.current) {
+      if (idleTimeoutRef.current !== null) {
         clearTimeout(idleTimeoutRef.current);
       }
       
-      if (animationFrameRef.current) {
+      if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
