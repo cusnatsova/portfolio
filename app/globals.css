@@ -1,0 +1,455 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Deep dark base - almost dark mode */
+  --background: #0c0a14;
+  --background-elevated: #12101a;
+  --background-card: #16131f;
+  --background-card-hover: #1c1826;
+  
+  /* Violet-dominant palette */
+  --violet-50: #f5f3ff;
+  --violet-100: #ede9fe;
+  --violet-200: #ddd6fe;
+  --violet-300: #c4b5fd;
+  --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;
+  --violet-600: #7c3aed;
+  --violet-700: #6d28d9;
+  --violet-800: #5b21b6;
+  --violet-900: #4c1d95;
+  --violet-950: #2e1065;
+  
+  /* Accent spectrum - fuchsia, lavender for variety */
+  --fuchsia-400: #e879f9;
+  --fuchsia-500: #d946ef;
+  --indigo-400: #818cf8;
+  --lavender: #e0e7ff;
+  
+  /* UI tokens */
+  --card-bg: var(--background-card);
+  --card-border: rgba(139, 92, 246, 0.15);
+  --card-border-hover: rgba(139, 92, 246, 0.4);
+  --primary-violet: var(--violet-500);
+  --primary-purple: var(--violet-600);
+  --accent-glow: var(--violet-400);
+  --accent-maroon: #be185d;
+  --accent-fuchsia: var(--fuchsia-500);
+  
+  /* Text */
+  --text-primary: #f5f3ff;
+  --text-secondary: #c4b5fd;
+  --text-muted: #8b7cb8;
+  --text-dim: #6b5b94;
+  
+  /* Effects */
+  --glow-violet: rgba(139, 92, 246, 0.4);
+  --glow-purple: rgba(167, 139, 250, 0.35);
+  --glow-fuchsia: rgba(217, 70, 239, 0.3);
+  --border-subtle: rgba(139, 92, 246, 0.12);
+  --hover-bg: rgba(139, 92, 246, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-primary);
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* Base ambient glow - subtle static layer */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(124, 58, 237, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* Enhanced background for sparkle particles */
+.sparkle-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 40% at 80% 100%, rgba(124, 58, 237, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Subtle grid overlay for depth */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+/* Live wallpaper - animated gradient orbs */
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(40px, -30px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(30px, 40px) scale(1.02); }
+}
+
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -20px) scale(1.08); }
+  66% { transform: translate(30px, 30px) scale(0.92); }
+}
+
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-40px, 50px) scale(1.03); }
+  50% { transform: translate(50px, -30px) scale(0.97); }
+  75% { transform: translate(-30px, -20px) scale(1.05); }
+}
+
+@keyframes orb-drift-4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, -40px); }
+}
+
+@keyframes orb-drift-5 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(25px, 35px); }
+}
+
+.animate-orb-1 {
+  animation: orb-drift-1 25s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: orb-drift-2 30s ease-in-out infinite;
+}
+
+.animate-orb-3 {
+  animation: orb-drift-3 28s ease-in-out infinite;
+}
+
+.animate-orb-4 {
+  animation: orb-drift-4 22s ease-in-out infinite;
+}
+
+.animate-orb-5 {
+  animation: orb-drift-5 26s ease-in-out infinite;
+}
+
+/* Custom scrollbar - violet themed */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-elevated);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--violet-600), var(--violet-700));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--violet-500), var(--violet-600));
+}
+
+/* Glow utilities */
+.glow-violet {
+  box-shadow: 0 0 30px var(--glow-violet), 0 0 60px rgba(139, 92, 246, 0.15);
+}
+
+.glow-purple {
+  box-shadow: 0 0 25px var(--glow-purple), 0 0 50px rgba(167, 139, 250, 0.12);
+}
+
+.glow-fuchsia {
+  box-shadow: 0 0 25px var(--glow-fuchsia);
+}
+
+/* Premium card - glass morphism + violet border */
+.card-base {
+  background: linear-gradient(135deg, rgba(22, 19, 31, 0.9) 0%, rgba(18, 16, 26, 0.95) 100%);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-base:hover {
+  border-color: var(--card-border-hover);
+  box-shadow: 
+    0 0 0 1px rgba(139, 92, 246, 0.1),
+    0 20px 40px -15px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(139, 92, 246, 0.08);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-border-hover);
+  box-shadow: 
+    0 0 0 1px rgba(139, 92, 246, 0.15),
+    0 25px 50px -15px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(139, 92, 246, 0.15);
+}
+
+/* Primary button - vibrant violet gradient */
+.btn-primary {
+  background: linear-gradient(135deg, var(--violet-500), var(--violet-700));
+  color: white;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 0.6s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(139, 92, 246, 0.45),
+    0 0 40px rgba(139, 92, 246, 0.2);
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary button - outlined violet */
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  padding: 14px 28px;
+  border: 1.5px solid var(--card-border);
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-violet);
+  color: var(--violet-300);
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.15);
+}
+
+/* Text gradient - violet spectrum */
+.text-gradient {
+  background: linear-gradient(135deg, var(--violet-300), var(--violet-500), var(--fuchsia-500));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section headings - premium treatment */
+.section-heading {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--text-primary), var(--violet-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 20px var(--glow-violet); }
+  50% { opacity: 1; box-shadow: 0 0 40px var(--glow-violet); }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.float-animation {
+  animation: float 3.5s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.slide-in-up {
+  animation: slide-in-up 0.6s ease-out;
+}
+
+.fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+/* Scroll-triggered reveal */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered letter reveal */
+@keyframes letter-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.letter-reveal {
+  display: inline-block;
+  opacity: 0;
+  animation: letter-reveal 0.6s ease-out forwards;
+}
+
+.letter-reveal.space {
+  width: 0.25em;
+}
+
+/* Skill tags - violet hover treatment */
+.skill-tag {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+  background: rgba(139, 92, 246, 0.2) !important;
+  color: var(--violet-300) !important;
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.2);
+}
+
+/* Neon glow for key elements */
+.neon-text {
+  color: var(--text-primary);
+  text-shadow: 
+    0 0 10px rgba(139, 92, 246, 0.6),
+    0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Hero avatar ring - animated violet glow */
+.avatar-ring {
+  box-shadow: 
+    0 0 0 2px var(--background-card),
+    0 0 0 4px var(--violet-500),
+    0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+/* Stat card enhancement */
+.stat-card {
+  background: linear-gradient(135deg, rgba(22, 19, 31, 0.8), rgba(18, 16, 26, 0.9));
+  border: 1px solid var(--card-border);
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.1);
+}
+
+/* Form inputs - violet focus */
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.4);
+}
+
+/* Status dot */
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+  animation: pulse-status 2s infinite;
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
