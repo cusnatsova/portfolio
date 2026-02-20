@@ -54,6 +54,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--text-primary);
+  --color-text-primary: var(--text-primary);
   --font-sans: 'Outfit', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
