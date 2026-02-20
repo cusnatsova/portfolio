@@ -2,7 +2,7 @@
   "name": "cusnat-portfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://bharathrajm-2005.github.io/bharathrajmPortfolio",
+  "homepage": "https://cusnatsova.github.io/portfolio",
   "scripts": {
     "dev": "next dev",
     "dev:webpack": "next dev --webpack",
